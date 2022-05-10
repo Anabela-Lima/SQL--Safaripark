@@ -1,0 +1,87 @@
+-- 1.  Write a query  to find the names of the animals in a given enclosure
+
+SELECT name FROM animal WHERE enclosure_id=1;
+SELECT name FROM animal WHERE enclosure_id=2;
+SELECT name FROM animal WHERE enclosure_id=3;
+
+-- 2.  Write a query  to find the names of the staff working in a given enclosure
+
+SELECT name
+FROM staff
+INNER JOIN assignment
+ON staff.id = assignment.employeeid
+WHERE enclosureid=1;
+
+-------  EXTENSIONS--------
+
+--1. The names of staff working in enclosures which are closed for maintenance -->
+
+SELECT staff.name
+FROM staff
+INNER JOIN assignment 
+ON staff.id = assignment.employeeid
+INNER JOIN enclosure
+ON assignment.enclosureid = enclosure.id
+WHERE enclosure.closedformaintenance= '1';
+
+
+--2. The name of the enclosure where the oldest animal lives. If there are two animals who are the same age choose the first one alphabetically. 
+
+SELECT animal.name, enclosure_id, age
+FROM animal
+INNER JOIN enclosure
+ON animal.enclosure_id=enclosure.id
+ORDER BY animal.age DESC
+LIMIT 1;
+
+
+--3. The number of different animal types a given keeper has been assigned to work with.
+
+SELECT enclosure_id
+FROM animal
+INNER JOIN enclosure
+ON animal.enclosure_id=enclosure.id
+ORDER BY animal.age DESC
+LIMIT 1;
+
+
+-- 4. - The number of different keepers who have been assigned to work in a given enclosure
+
+SELECT COUNT(DISTINCT(employeeId)), enclosureid
+FROM assignment 
+INNER JOIN enclosure
+ON enclosure.id=enclosureId 
+WHERE enclosureID=3
+GROUP BY assignment.enclosureid;
+
+- The names of the other animals sharing an enclosure with a given animal (eg. find the names of all the animals sharing the big cat field with Tony)
+
+
+SELECT *
+FROM animal
+INNER JOIN enclosure
+ON enclosure_id=enclosure.id;
+
+SELECT animal.name,enclosure.name
+FROM animal
+INNER JOIN enclosure
+ON enclosure_id=enclosure.id;
+
+SELECT animal.name,enclosure.name, enclosure.id
+FROM animal
+INNER JOIN enclosure
+ON enclosure_id=enclosure.id
+WHERE Enclosure.id=1;
+
+-----
+
+SELECT name, enclosure_id
+FROM animal 
+WHERE enclosure_id  
+       = 
+       (SELECT 
+         enclosure_id
+         FROM animal
+         WHERE name= 'Elston')
+         AND 
+         NOT name = 'Elston';
