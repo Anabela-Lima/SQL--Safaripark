@@ -57,16 +57,6 @@ GROUP BY assignment.enclosureid;
 - The names of the other animals sharing an enclosure with a given animal (eg. find the names of all the animals sharing the big cat field with Tony)
 
 
-SELECT *
-FROM animal
-INNER JOIN enclosure
-ON enclosure_id=enclosure.id;
-
-SELECT animal.name,enclosure.name
-FROM animal
-INNER JOIN enclosure
-ON enclosure_id=enclosure.id;
-
 SELECT animal.name,enclosure.name, enclosure.id
 FROM animal
 INNER JOIN enclosure
